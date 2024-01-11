@@ -36,8 +36,8 @@ def send_image(file_path):
     Himage = Image.open(file_path)
     epd.display(epd.getbuffer(Himage))
     logging.info("Goto Sleep")
-    epd.sleep()
-
+    # epd.sleep()
+    epd.reset()
 
 def main(file_name):
     path_img = Path(__file__).parent / file_name
