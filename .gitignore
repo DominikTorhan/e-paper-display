@@ -1,7 +1,6 @@
 .idea
 __pycache__
 temp
-suntime.json
 weather.json
 forecast.json
 *.bmp

@@ -1,6 +1,6 @@
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
-from utils import get_buses, get_suntimes, get_weather, get_weather_forecast
+from utils import get_buses, get_weather, get_weather_forecast
 
 WIDTH = 800
 HEIGHT = 480
@@ -27,31 +27,33 @@ class Drawer:
 
     def draw(self):
         self.draw_time(10, 10)
-        self.draw_suntime(10, 150)
-        self.draw_weather(400, 10)
+        weather = get_weather()
+        self.draw_suntime(10, 150, weather)
+        self.draw_weather(400, 10, weather)
         self.draw_buses(400, 300)
         self.image.save(self.file_name)
 
     def draw_time(self, ref_x, ref_y):
         draw = ImageDraw.Draw(self.image)
         time = datetime.now()
-        if time.minute < 10:
-            minute_str = "0" + str(time.minute)
-        else:
-            minute_str = str(time.minute)
+        minute_str = str(time.minute)
+        if len(minute_str) == 1:
+            minute_str = "0" + minute_str
         time_str = f"{time.hour}:{minute_str}"
-        date_str = f"{time.day}.{time.month}.{time.year}"
+        month_str = str(time.month)
+        if len(month_str) == 1:
+            month_str = "0" + month_str
+        date_str = f"{time.day}.{month_str}.{time.year}"
         draw.text((ref_x + 5, ref_y), time_str, font=FONT_BIG)
         draw.text((ref_x, ref_y + 50), date_str, font=FONT_MID)
         draw.text((ref_x, ref_y + 80), WEEKDAYS[time.weekday()], font=FONT_MID)
 
-    def draw_suntime(self, ref_x, ref_y):
+    def draw_suntime(self, ref_x, ref_y, weather):
         draw = ImageDraw.Draw(self.image)
-        text = get_suntimes()
+        text = f"Wsch: {weather['sunrise']}\n Zach: {weather['sunset']}"
         draw.text((ref_x, ref_y), text, font=FONT_SML)
 
-    def draw_weather(self, ref_x, ref_y):
-        weather = get_weather()
+    def draw_weather(self, ref_x, ref_y, weather):
         draw = ImageDraw.Draw(self.image)
         temp = weather["temp"]
         temp_str = f"{temp}°"
