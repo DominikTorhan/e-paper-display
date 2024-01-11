@@ -8,13 +8,15 @@ SUN_TIME_FILE = "suntime.json"
 WEATHER_FILE = "weather.json"
 FORECAST_FILE = "forecast.json"
 WEATHER_REFRESH_MIN = 15
+TIME_TABLE_URL = None
 
 with open("env.json", "r") as openfile:
     data = json.load(openfile)
     API_KEY = data["weather_api_key"]
     LAT = data["lat"]
     LON = data["lon"]
-    TIME_TABLE_URL = data["timetable"]
+    if "timetable" in data:
+        TIME_TABLE_URL = data["timetable"]
 
 LANG = "pl"
 WEATHER_API_URL = f"https://api.openweathermap.org/data/2.5/weather?lat={LAT}&lon={LON}&appid={API_KEY}&units=metric&lang={LANG}"
@@ -154,6 +156,8 @@ def get_weather_forecast():
 
 
 def get_buses():
+    if not TIME_TABLE_URL:
+        return
     url = TIME_TABLE_URL
     filename = "buses.zip"
     response = requests.get(url)
