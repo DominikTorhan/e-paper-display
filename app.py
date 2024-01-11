@@ -46,7 +46,8 @@ def main(file_name):
         send_image(path_img)
     except IOError as e:
         logging.info(e)
-    except:
+    except Exception as e:
+        logging.info(e)
         pass
 
 
@@ -55,6 +56,7 @@ if __name__ == "__main__":
     minute_old = -1
     while run:
         minute = datetime.datetime.now().minute
+        logging.info(datetime.datetime.now())
         logging.info(f"{minute=}")
         logging.info(f"{minute_old=}")
         if minute != minute_old:
