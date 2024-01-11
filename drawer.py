@@ -35,7 +35,11 @@ class Drawer:
     def draw_time(self, ref_x, ref_y):
         draw = ImageDraw.Draw(self.image)
         time = datetime.now()
-        time_str = f"{time.hour}:{time.minute}"
+        if time.minute < 10:
+            minute_str = "0" + str(time.minute)
+        else:
+            minute_str = str(time.minute)
+        time_str = f"{time.hour}:{minute_str}"
         date_str = f"{time.day}.{time.month}.{time.year}"
         draw.text((ref_x + 5, ref_y), time_str, font=FONT_BIG)
         draw.text((ref_x, ref_y + 50), date_str, font=FONT_MID)
