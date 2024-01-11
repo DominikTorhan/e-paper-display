@@ -21,15 +21,16 @@ WEEKDAYS = {
 
 
 class Drawer:
-    def __init__(self):
+    def __init__(self, file_name="test.bmp"):
         self.image = Image.new("1", (WIDTH, HEIGHT), 255)  # 255: clear the frame
+        self.file_name = file_name
 
     def draw(self):
         self.draw_time(10, 10)
         self.draw_suntime(10, 150)
         self.draw_weather(400, 10)
         self.draw_buses(400, 300)
-        self.image.save("test.bmp")
+        self.image.save(self.file_name)
 
     def draw_time(self, ref_x, ref_y):
         draw = ImageDraw.Draw(self.image)
