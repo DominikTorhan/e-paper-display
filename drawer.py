@@ -1,6 +1,9 @@
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 from utils import get_buses, get_weather, get_weather_forecast
+from pathlib import Path
+
+ICONS_DIR = Path(__file__).parent / "icons"
 
 WIDTH = 800
 HEIGHT = 480
@@ -31,6 +34,7 @@ class Drawer:
         self.draw_suntime(10, 170, weather)
         self.draw_weather(280, 10, weather)
         self.draw_buses(400, 300)
+        self.draw_icon(425, -25, weather["icon"])
         self.image.save(self.file_name)
 
     def draw_time(self, ref_x, ref_y):
@@ -58,17 +62,25 @@ class Drawer:
         temp = weather["temp"]
         temp_str = f"{temp}°"
         draw.text((ref_x, ref_y), temp_str, font=FONT_BIG)
-        draw.text((ref_x + 200, ref_y + 10), f"{weather['pressure']}hPa", font=FONT_SML)
-        draw.text((ref_x, ref_y + 70), weather["dscr"], font=FONT_MID)
+        draw.text((ref_x + 325, ref_y + 10), f"{weather['pressure']}hPa", font=FONT_SML)
+        ref = 130
+        draw.text((ref_x, ref_y + ref), weather["dscr"], font=FONT_MID)
         forecast = get_weather_forecast()
         date_now = datetime.now()
-        ref = 120
+        ref += 50
         for wday in forecast:
             if wday == date_now.weekday():
                 continue
             text = f"{WEEKDAYS[wday]}: {forecast[wday]['temp_min']}°/{forecast[wday]['temp_max']}°"
             draw.text((ref_x, ref_y + ref), text, font=FONT_SML)
             ref += 30
+
+    def draw_icon(self, ref_x, ref_y, icon: str):
+        icon_file = icon + '.png'
+        path = ICONS_DIR / icon_file
+        if path.exists():
+            icon_image = Image.open(ICONS_DIR / icon_file)
+            self.image.paste(icon_image, (ref_x, ref_y))
 
     def draw_buses(self, ref_x, ref_y):
         get_buses()

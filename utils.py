@@ -54,13 +54,14 @@ def get_weather() -> dict:
         with open(WEATHER_FILE, "w") as outfile:
             outfile.write(json_object)
 
-    temp: float = round(data["main"]["temp"], 1)
-    dscr: str = data["weather"][0]["description"]
-    sunrise = str(datetime.fromtimestamp(data["sys"]["sunrise"]).time())
-    sunset = str(datetime.fromtimestamp(data["sys"]["sunset"]).time())
-    pressure = str(data["main"]["pressure"])
-
-    return {"temp": temp, "dscr": dscr, "sunrise": sunrise, "sunset": sunset, "pressure": pressure}
+    return {
+        "temp": round(data["main"]["temp"], 1),
+        "dscr": data["weather"][0]["description"],
+        "sunrise": str(datetime.fromtimestamp(data["sys"]["sunrise"]).time()),
+        "sunset": str(datetime.fromtimestamp(data["sys"]["sunset"]).time()),
+        "pressure": str(data["main"]["pressure"]),
+        "icon": data["weather"][0]["icon"]
+    }
 
 
 def get_weather_forecast():
