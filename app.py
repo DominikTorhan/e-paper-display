@@ -58,7 +58,7 @@ def main(file_name, reset=False):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="E-PAPER DISPLAY")
-    parser.add_argument("-s", "--single", action="store_true", default=False, help="Executes single draw and exits.")
+    parser.add_argument("-s", "--single", action="store_true", default=True, help="Executes single draw and exits.")
     args = parser.parse_args()
     file_name = "test.bmp"
     if args.single:
