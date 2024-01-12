@@ -3,6 +3,8 @@ import logging
 from pathlib import Path
 import signal
 from time import sleep
+import argparse
+import sys
 
 from PIL import Image
 
@@ -39,6 +41,7 @@ def send_image(file_path):
     # epd.sleep()
     epd.reset()
 
+
 def main(file_name):
     path_img = Path(__file__).parent / file_name
 
@@ -52,7 +55,17 @@ def main(file_name):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(prog="E-PAPER DISPLAY")
+    parser.add_argument("-s", "--single", action="store_true", default=False, help="Executes single draw and exits.")
+    args = parser.parse_args()
     file_name = "test.bmp"
+    if args.single:
+        logging.info("Exec single mode")
+        Drawer(file_name=file_name).draw()
+        main(file_name)
+        logging.info("Exit single mode")
+        sys.exit(0)
+
     minute_old = -1
     while run:
         minute = datetime.datetime.now().minute
