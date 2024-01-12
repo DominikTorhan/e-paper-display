@@ -29,7 +29,7 @@ class Drawer:
         self.draw_time(10, 10)
         weather = get_weather()
         self.draw_suntime(10, 170, weather)
-        self.draw_weather(400, 10, weather)
+        self.draw_weather(280, 10, weather)
         self.draw_buses(400, 300)
         self.image.save(self.file_name)
 
@@ -58,10 +58,11 @@ class Drawer:
         temp = weather["temp"]
         temp_str = f"{temp}°"
         draw.text((ref_x, ref_y), temp_str, font=FONT_BIG)
-        draw.text((ref_x, ref_y + 70), weather["dscr"], font=FONT_SML)
+        draw.text((ref_x + 200, ref_y + 10), f"{weather['pressure']}hPa", font=FONT_SML)
+        draw.text((ref_x, ref_y + 70), weather["dscr"], font=FONT_MID)
         forecast = get_weather_forecast()
         date_now = datetime.now()
-        ref = 100
+        ref = 120
         for wday in forecast:
             if wday == date_now.weekday():
                 continue

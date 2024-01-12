@@ -58,8 +58,9 @@ def get_weather() -> dict:
     dscr: str = data["weather"][0]["description"]
     sunrise = str(datetime.fromtimestamp(data["sys"]["sunrise"]).time())
     sunset = str(datetime.fromtimestamp(data["sys"]["sunset"]).time())
+    pressure = str(data["main"]["pressure"])
 
-    return {"temp": temp, "dscr": dscr, "sunrise": sunrise, "sunset": sunset}
+    return {"temp": temp, "dscr": dscr, "sunrise": sunrise, "sunset": sunset, "pressure": pressure}
 
 
 def get_weather_forecast():
