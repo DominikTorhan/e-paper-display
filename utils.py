@@ -6,7 +6,8 @@ import requests
 
 WEATHER_FILE = "weather.json"
 FORECAST_FILE = "forecast.json"
-WEATHER_REFRESH_MIN = 15
+WEATHER_REFRESH_MIN = 20
+FORECAST_REFRESH_MIN = 60
 TIME_TABLE_URL = None
 
 with open("env.json", "r") as openfile:
@@ -74,7 +75,7 @@ def get_weather_forecast():
         else:
             td = dt_now - dt
         minutes = td.total_seconds() / 60
-        if minutes > WEATHER_REFRESH_MIN:
+        if minutes > FORECAST_REFRESH_MIN:
             return None
         return cache
 
@@ -105,7 +106,6 @@ def get_weather_forecast():
             temp_max = max(temp_max, days[wday]["temp_max"])
         day_data = {"temp_min": round(temp_min, 1), "temp_max": round(temp_max, 1)}
         days[wday] = day_data
-        pass
 
     return days
 
