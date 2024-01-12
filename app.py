@@ -30,7 +30,7 @@ signal.signal(signal.SIGINT, handler_stop_signals)
 signal.signal(signal.SIGTERM, handler_stop_signals)
 
 
-def send_image(file_path):
+def send_image(file_path, reset=False):
     epd = EPD()
     logging.info("init")
     epd.init()
@@ -38,15 +38,17 @@ def send_image(file_path):
     Himage = Image.open(file_path)
     epd.display(epd.getbuffer(Himage))
     logging.info("Goto Sleep")
-    # epd.sleep()
-    epd.reset()
+    if reset:
+        epd.reset()
+    else:
+        epd.sleep()
 
 
-def main(file_name):
+def main(file_name, reset=False):
     path_img = Path(__file__).parent / file_name
 
     try:
-        send_image(path_img)
+        send_image(path_img, reset)
     except IOError as e:
         logging.info(e)
     except Exception as e:
@@ -76,5 +78,5 @@ if __name__ == "__main__":
             logging.info("draw")
             minute_old = minute
             Drawer(file_name=file_name).draw()
-            main(file_name)
+            main(file_name, reset=True)
         sleep(1)
