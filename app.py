@@ -67,12 +67,12 @@ if __name__ == "__main__":
     )
     args = parser.parse_args()
     file_name = "test.bmp"
-    if args.single:
-        logging.info("Exec single mode")
-        Drawer(file_name=file_name).draw()
-        main(file_name)
-        logging.info("Exit single mode")
-        sys.exit(0)
+    # if args.single:
+    #     logging.info("Exec single mode")
+    #     Drawer(file_name=file_name).draw()
+    #     main(file_name)
+    #     logging.info("Exit single mode")
+    #     sys.exit(0)
 
     minute_old = -1
     while run:
