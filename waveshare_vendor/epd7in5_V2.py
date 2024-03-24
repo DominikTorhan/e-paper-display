@@ -49,6 +49,7 @@ class EPD:
 
     # Hardware reset
     def reset(self):
+        logger.debug("Perform reset()")
         epdconfig.digital_write(self.reset_pin, 1)
         epdconfig.delay_ms(20)
         epdconfig.digital_write(self.reset_pin, 0)
@@ -85,6 +86,7 @@ class EPD:
         logger.debug("e-Paper busy release")
 
     def init(self):
+        logger.debug("Perform init()")
         if epdconfig.module_init() != 0:
             return -1
         # EPD hardware init start

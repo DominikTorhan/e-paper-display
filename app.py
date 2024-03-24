@@ -72,7 +72,7 @@ if __name__ == "__main__":
         logging.info("Reset arg!")
         epd = EPD()
         epd.reset()
-        epd.init()
+        # epd.init()
 
 
     Drawer(file_name=file_name).draw()
