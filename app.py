@@ -66,6 +66,13 @@ if __name__ == "__main__":
         default=False,
         help="Resets HW.",
     )
+    parser.add_argument(
+        "-c",
+        "--clear",
+        action="store_true",
+        default=False,
+        help="Clears HW.",
+    )
     args = parser.parse_args()
     file_name = "test.bmp"
     if args.reset:
@@ -74,6 +81,13 @@ if __name__ == "__main__":
         epd.reset()
         sys.exit(0)
         # epd.init()
+
+    if args.clear:
+        logging.info("Clear!")
+        epd = EPD()
+        epd.reset()
+        epd.Clear()
+        sys.exit(0)
 
 
     Drawer(file_name=file_name).draw()
