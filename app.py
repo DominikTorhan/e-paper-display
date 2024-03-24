@@ -72,6 +72,7 @@ if __name__ == "__main__":
         logging.info("Reset arg!")
         epd = EPD()
         epd.reset()
+        sys.exit(0)
         # epd.init()
 
 
