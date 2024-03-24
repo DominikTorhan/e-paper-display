@@ -38,10 +38,11 @@ def send_image(file_path, reset=False):
     Himage = Image.open(file_path)
     epd.display(epd.getbuffer(Himage))
     logging.info("Goto Sleep")
-    if reset:
-        epd.reset()
-    else:
-        epd.sleep()
+    epd.reset()
+    # if reset:
+    #     epd.reset()
+    # else:
+    #     epd.sleep()
 
 
 def main(file_name, reset=False):
@@ -59,30 +60,35 @@ def main(file_name, reset=False):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="E-PAPER DISPLAY")
     parser.add_argument(
-        "-s",
-        "--single",
+        "-r",
+        "--reset",
         action="store_true",
-        default=True,
-        help="Executes single draw and exits.",
+        default=False,
+        help="Resets HW.",
     )
     args = parser.parse_args()
     file_name = "test.bmp"
-    # if args.single:
-    #     logging.info("Exec single mode")
-    #     Drawer(file_name=file_name).draw()
-    #     main(file_name)
-    #     logging.info("Exit single mode")
-    #     sys.exit(0)
+    if args.reset:
+        logging.info("Reset arg!")
+        epd = EPD()
+        epd.reset()
+        epd.init()
 
-    minute_old = -1
-    while run:
-        minute = datetime.datetime.now().minute
-        logging.info(datetime.datetime.now())
-        logging.info(f"{minute=}")
-        logging.info(f"{minute_old=}")
-        if minute != minute_old:
-            logging.info("draw")
-            minute_old = minute
-            Drawer(file_name=file_name).draw()
-            main(file_name, reset=True)
-        sleep(1)
+
+    Drawer(file_name=file_name).draw()
+    main(file_name)
+    logging.info("Exit single mode")
+    sys.exit(0)
+
+    # minute_old = -1
+    # while run:
+    #     minute = datetime.datetime.now().minute
+    #     logging.info(datetime.datetime.now())
+    #     logging.info(f"{minute=}")
+    #     logging.info(f"{minute_old=}")
+    #     if minute != minute_old:
+    #         logging.info("draw")
+    #         minute_old = minute
+    #         Drawer(file_name=file_name).draw()
+    #         main(file_name, reset=True)
+    #     sleep(1)
